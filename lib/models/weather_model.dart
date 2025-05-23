@@ -44,7 +44,7 @@ class Weather {
       condition: condition ?? this.condition,
       description: description ?? this.description,
       pressure: pressure ?? this.pressure,
-      humidity: humidity ?? this.pressure,
+      humidity: humidity ?? this.humidity,
       windSpeed: windSpeed ?? this.windSpeed,
     );
   }
