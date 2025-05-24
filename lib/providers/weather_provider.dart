@@ -25,4 +25,12 @@ class WeatherNotifier extends AsyncNotifier<Weather?> {
       return await service.getWeatherFromLocation();
     });
   }
+
+  Future<void> fetchByCity(String cityName) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      final service = ref.read(weatherServiceProvider);
+      return await service.getWeatherByCity(cityName);
+    });
+  }
 }
