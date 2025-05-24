@@ -18,14 +18,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final themeMode = ref.watch(themeNotifierProvider);
     final theme = themeMode == ThemeMode.dark;
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        _controller.clear();
+      },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Easy Weather"),
+          title: const Text(
+            "Easy Weather",
+            style: TextStyle(
+              fontSize: 32,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
           actions: [
             IconButton(
               icon: const Icon(Icons.refresh),
-              onPressed: () => ref.read(weatherProvider.notifier).refresh(),
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Fetch weather of current location"),
+                  ),
+                );
+                ref.read(weatherProvider.notifier).refresh();
+              },
             ),
             IconButton(
               icon: theme ? Icon(Icons.dark_mode) : Icon(Icons.light_mode),
@@ -42,6 +58,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 TextField(
                   controller: _controller,
                   decoration: InputDecoration(
+                    icon: Icon(Icons.sunny_snowing),
+                    hintText: "Search by City",
                     border: OutlineInputBorder(),
                     suffixIcon: IconButton(
                       onPressed: () {
